@@ -11,40 +11,55 @@
 // set current to first of last portion
 // loop through searching for portion ending with the new current
 // check the remaining portion if the portions are similar swap and push
-let scrambled: string[] = ['']
+var scrambled: string[] = ['_NtoA','RfromI','RtoO','IfromA','BtoI_','BfromO']
+console.log("processing..")
+Unscramble(scrambled)
+
 function Unscramble( scrambled: string[]): string{
-    // Initialized variables
-    let intermediate:string[] = []
-    let sanitized:string[] = []
-    let current:string[] = []
-    let first:string = ''
-    let last:string = ''
-    let temp:string = ''
-    // remove to and from and sanitized
-    scrambled.forEach(x => {
-        if ( x.indexOf('to') != -1 && x.length === 4) {
-            temp = x[0] + x[x.length-1]
-            sanitized.push(temp)
-        } else {
-            temp = x[x.length-1] + x[0]
-            sanitized
+    let word : string[] = []
+    let sanitized : string[] = []
+    var temp : string = ''
+    var reverse : string = ''
+
+    // Sanitize scrambled
+    for (let portion of scrambled){
+        if ( portion.indexOf('to') != -1){
+            temp = portion.replace('to', "")
         }
-    });
-    console.dir(sanitized)
-    // first and last
-    // for (const portion of scrambled) {
-    //     if (portion.charAt(0) == '_') {
-    //         first = portion
-    //         // push to word
-    //         intermediate = Array(first) 
+        if ( portion.indexOf('from') != -1){
+            portion.replace('from', "")
+            temp = portion.charAt(portion.length-1) + portion.charAt(0)
+        }
+        sanitized.push(temp)
+    }
+    // Find first and last and push to word
+    for(let pair of sanitized){
+        if (pair[0] == '_') {
+            let first_pair: string = pair.substring(1)
+            word.push(first_pair)
+            var current : string = first_pair[1]
+        }
+        if (pair[pair.length-1] == '_') {
+            let last_pair: string = pair.substring(0,2)
+            word.push(last_pair)
+            reverse = last_pair[0]
+            var reverse_index : number = 0
+        }
+    }
+    // loop through the rest
+    var current_index : number = 1
+
+    for (let element of sanitized) {
+        
+    }
+    // loop through the rest reverse
+    // for (let x = 0; x < sanitized.length; x++) {
+    //     const element_reverse = sanitized[x];
+    //     if (element_reverse[1] === reverse ) {
+    //         word.splice(reverse_index, 0,  element_reverse[0])
     //     }
-    //     if (portion.charAt(-1) == '_') {
-    //         last = portion
-    //     }
+    //     reverse_index--
     // }
-
-    // Find first portion and last portion push to word
-
-
-    return 'String'
+    console.dir(word)
+    return 'word'
 }
